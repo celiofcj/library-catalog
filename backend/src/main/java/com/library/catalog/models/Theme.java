@@ -6,9 +6,10 @@ import jakarta.validation.constraints.NotNull;
 
 import java.util.List;
 
-@Table
+@Table(name = Theme.TABLE_NAME)
 @Entity
 public class Theme {
+    public static final String TABLE_NAME = "theme";
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_theme", unique = true)
     @NotNull
