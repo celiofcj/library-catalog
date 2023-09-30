@@ -1,8 +1,10 @@
 package com.library.catalog.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,7 +23,7 @@ public class Book {
     public static final String TABLE_NAME = "book";
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_book", unique = true)
+    @Column(name = "id", unique = true)
     @NotNull
     private Integer id;
 
@@ -41,17 +43,19 @@ public class Book {
 
     @ManyToMany
     @JoinTable(name = "theme_association",
-            joinColumns = @JoinColumn(referencedColumnName = "id_book"),
+            joinColumns = @JoinColumn(referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(referencedColumnName = "id_theme"))
     private List<Theme> themes;
 
+
+    @ManyToMany
+    @JoinTable(name = "book_writer",
+            joinColumns = @JoinColumn(referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(referencedColumnName = "id"))
+    private List<Writer> writers;
+
     /*
     @OneToMany
-    @JsonIgnore
-    private List<Writing> writings = new ArrayList<>();
-
-    @OneToMany
-    @JsonIgnore
     private List<Example> examples = new ArrayList<>();
     */
 
