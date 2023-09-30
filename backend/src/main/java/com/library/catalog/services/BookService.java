@@ -23,7 +23,7 @@ public class BookService {
         this.themeService = themeService;
     }
 
-    public Book findById(Integer id){
+    public Book findById(Long id){
         Optional<Book> book = bookRepository.findById(id);
 
         return book.orElseThrow(() -> new EntityNotFoundException("Not found book with id: {" +
@@ -49,7 +49,7 @@ public class BookService {
             return bookRepository.save(newBook);
     }
 
-    public void delete(Integer id){
+    public void delete(Long id){
         bookRepository.delete(findById(id));
     }
 

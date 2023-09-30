@@ -15,7 +15,7 @@ public class ThemeService {
     @Autowired
     ThemeRepository themeRepository;
 
-    public Theme findById(Integer id){
+    public Theme findById(Long id){
         Optional<Theme> theme = themeRepository.findById(id);
 
         return theme.orElseThrow(() -> new EntityNotFoundException("Not found theme with id: {" +

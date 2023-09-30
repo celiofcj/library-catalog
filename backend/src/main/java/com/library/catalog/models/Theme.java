@@ -20,7 +20,7 @@ public class Theme {
     public static final String TABLE_NAME = "theme";
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true)
-    private Integer id;
+    private Long id;
 
     @Column(name = "theme_name", unique = true, nullable = false)
     @NotBlank

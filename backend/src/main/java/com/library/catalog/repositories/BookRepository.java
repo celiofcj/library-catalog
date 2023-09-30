@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public interface BookRepository extends JpaRepository<Book, Integer> {
-    List<Book> findAllByWritersId(Integer id);
-    List<Book> findAllByThemesId(Integer id);
+public interface BookRepository extends JpaRepository<Book, Long> {
+    List<Book> findAllByWritersId(Long id);
+    List<Book> findAllByThemesId(Long id);
 }

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
-public interface ThemeRepository extends JpaRepository<Theme, Integer> {
-    List<Theme> findAllByBooksId(Integer id);
+public interface ThemeRepository extends JpaRepository<Theme, Long> {
+    List<Theme> findAllByBooksId(Long id);
     Optional<Theme> findByName(String name);
 }

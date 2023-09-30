@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public interface BookInstanceRepository extends JpaRepository<BookInstance, Integer> {
-    List<BookInstance> findAllByBookId(Integer id);
+public interface BookInstanceRepository extends JpaRepository<BookInstance, Long> {
+    List<BookInstance> findAllByBookId(Long id);
 }
