@@ -11,7 +11,7 @@ import java.util.List;
 public class Theme {
     public static final String TABLE_NAME = "theme";
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_theme", unique = true)
+    @Column(name = "id", unique = true)
     @NotNull
     private Integer id;
 

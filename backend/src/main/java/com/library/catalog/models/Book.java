@@ -42,14 +42,14 @@ public class Book {
     private Boolean rentable;
 
     @ManyToMany
-    @JoinTable(name = "theme_association",
+    @JoinTable(name = "theme_book",
             joinColumns = @JoinColumn(referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(referencedColumnName = "id_theme"))
+            inverseJoinColumns = @JoinColumn(referencedColumnName = "id"))
     private List<Theme> themes;
 
 
     @ManyToMany
-    @JoinTable(name = "book_writer",
+    @JoinTable(name = "writer_book",
             joinColumns = @JoinColumn(referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(referencedColumnName = "id"))
     private List<Writer> writers;
