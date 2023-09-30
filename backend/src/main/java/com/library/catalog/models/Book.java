@@ -37,10 +37,6 @@ public class Book {
     @Column(name = "publisher")
     private String publisher;
 
-    @Column(name = "rentable", nullable = false)
-    @NotNull
-    private Boolean rentable;
-
     @ManyToMany
     @JoinTable(name = "theme_book",
             joinColumns = @JoinColumn(referencedColumnName = "id"),
@@ -54,9 +50,7 @@ public class Book {
             inverseJoinColumns = @JoinColumn(referencedColumnName = "id"))
     private List<Writer> writers;
 
-    /*
-    @OneToMany
-    private List<Example> examples = new ArrayList<>();
-    */
+    @OneToMany(mappedBy = "book")
+    private List<Example> examples;
 
 }
