@@ -1,6 +1,5 @@
 package com.library.catalog.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -51,6 +50,6 @@ public class Book {
     private List<Writer> writers;
 
     @OneToMany(mappedBy = "book")
-    private List<Example> examples;
+    private List<BookInstance> examples;
 
 }

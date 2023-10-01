@@ -3,10 +3,10 @@ package com.library.catalog.models;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
-@Table(name = Example.TABLE_NAME)
+@Table(name = BookInstance.TABLE_NAME)
 @Entity
-public class Example {
-    public static final String TABLE_NAME = "example";
+public class BookInstance {
+    public static final String TABLE_NAME = "instance";
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true)
