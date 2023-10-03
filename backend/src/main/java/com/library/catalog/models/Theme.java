@@ -20,7 +20,6 @@ public class Theme {
     public static final String TABLE_NAME = "theme";
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true)
-    @NotNull
     private Integer id;
 
     @Column(name = "theme_name", unique = true, nullable = false)
