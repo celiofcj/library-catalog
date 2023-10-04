@@ -35,7 +35,15 @@ public class BookService {
     public Book create(Book book){
         List<Theme> newThemes = new ArrayList<>();
         for(Theme theme : book.getThemes()){
-            boolean existsByName = themeService.existsByName(theme.getName());
+            boolean existsByName;
+            try {
+                themeService.findByName(theme.getName());
+                existsByName = true;
+            }
+            catch (EntityNotFoundException e){
+                existsByName = false;
+            }
+
             if(theme.getId() == null && !existsByName){
                  newThemes.add(themeService.create(theme));
             }

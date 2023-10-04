@@ -33,8 +33,4 @@ public class ThemeService {
     public Theme create(Theme theme){
         return themeRepository.save(theme);
     }
-
-    public Boolean existsByName(String name){
-        return themeRepository.findByName(name).isPresent();
-    }
 }
