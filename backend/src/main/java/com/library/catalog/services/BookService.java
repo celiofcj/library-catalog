@@ -33,6 +33,14 @@ public class BookService {
 
     @Transactional
     public Book create(Book book){
+        List<Theme> themes = getThemes(book);
+        Book newBook = new Book(book);
+        newBook.setThemes(themes);
+
+        return bookRepository.save(newBook);
+    }
+
+    private List<Theme> getThemes(Book book) {
         List<Theme> newThemes = new ArrayList<>();
         for(Theme theme : book.getThemes()){
             boolean existsByName;
@@ -45,7 +53,7 @@ public class BookService {
             }
 
             if(theme.getId() == null && !existsByName){
-                 newThemes.add(themeService.create(theme));
+                newThemes.add(themeService.create(theme));
             }
             else if(existsByName){
                 newThemes.add(themeService.findByName(theme.getName()));
@@ -54,8 +62,6 @@ public class BookService {
                 newThemes.add(themeService.findById(theme.getId()));
             }
         }
-        book.setThemes(newThemes);
-
-        return bookRepository.save(book);
+        return newThemes;
     }
 }

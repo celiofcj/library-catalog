@@ -52,4 +52,15 @@ public class Book {
     @OneToMany(mappedBy = "book")
     private List<BookInstance> examples;
 
+    public Book(Book book){
+        this.id = book.id;
+        this.title = book.title;
+        this.publishYear = book.publishYear;
+        this.publisher = book.publisher;
+        this.themes = book.themes;
+        this.writers = book.writers;
+        this.examples = book.examples;
+    }
+
+
 }
