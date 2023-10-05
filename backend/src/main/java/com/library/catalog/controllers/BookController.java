@@ -2,6 +2,7 @@ package com.library.catalog.controllers;
 
 import com.library.catalog.models.Book;
 import com.library.catalog.services.BookService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,15 +29,32 @@ public class BookController {
     }
 
     @PostMapping
-    public ResponseEntity<Book> create(@RequestBody Book book){
+    public ResponseEntity<Book> post(@RequestBody Book book){
         Book newBook = bookService.create(book);
         URI uri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/{id}").
                 buildAndExpand(newBook.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
 
-    /*@DeleteMapping("/{id}")
+    @PutMapping
+    public ResponseEntity<Book> put(@RequestBody Book book){
+        Book newBook;
+        try{
+            bookService.findById(book.getId());
+            newBook = bookService.update(book);
+            return ResponseEntity.ok(newBook);
+        }
+        catch (EntityNotFoundException e){
+            newBook = bookService.create(book);
+            URI uri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/{id}").
+                    buildAndExpand(newBook.getId()).toUri();
+            return ResponseEntity.created(uri).build();
+        }
+    }
+
+    @DeleteMapping("/{id}")
     public ResponseEntity<Book> delete(@PathVariable Integer id){
-        bookService.
-    }*/
+        bookService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }

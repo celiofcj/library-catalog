@@ -14,15 +14,14 @@ import java.util.Optional;
 
 @Service
 public class BookService {
-    @Autowired
     private BookRepository bookRepository;
-    @Autowired
     private ThemeService themeService;
 
-    /*@Autowired
-    public BookService(BookRepository bookRepository){
-
-    }*/
+    @Autowired
+    public BookService(BookRepository bookRepository, ThemeService themeService){
+        this.bookRepository = bookRepository;
+        this.themeService = themeService;
+    }
 
     public Book findById(Integer id){
         Optional<Book> book = bookRepository.findById(id);
@@ -33,11 +32,25 @@ public class BookService {
 
     @Transactional
     public Book create(Book book){
+        book.setId(null);
         List<Theme> themes = getThemes(book);
         Book newBook = new Book(book);
         newBook.setThemes(themes);
 
         return bookRepository.save(newBook);
+    }
+
+    @Transactional
+    public Book update(Book book) {
+            List<Theme> themes = getThemes(book);
+            Book newBook = new Book(book);
+            newBook.setThemes(themes);
+
+            return bookRepository.save(newBook);
+    }
+
+    public void delete(Integer id){
+        bookRepository.delete(findById(id));
     }
 
     private List<Theme> getThemes(Book book) {
