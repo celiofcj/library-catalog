@@ -3,6 +3,7 @@ package com.library.catalog.controllers;
 import com.library.catalog.models.Book;
 import com.library.catalog.services.BookService;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +30,7 @@ public class BookController {
     }
 
     @PostMapping
-    public ResponseEntity<Book> post(@RequestBody Book book){
+    public ResponseEntity<Book> post(@Valid @RequestBody Book book){
         Book newBook = bookService.create(book);
         URI uri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/{id}").
                 buildAndExpand(newBook.getId()).toUri();
@@ -37,7 +38,7 @@ public class BookController {
     }
 
     @PutMapping
-    public ResponseEntity<Book> put(@RequestBody Book book){
+    public ResponseEntity<Book> put(@Valid @RequestBody Book book){
         Book newBook;
         try{
             bookService.findById(book.getId());
