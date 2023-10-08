@@ -15,13 +15,12 @@ import java.net.URI;
 @RequestMapping("/book")
 @RestController
 public class BookController {
-    @Autowired
     private BookService bookService;
 
-    /*@Autowired
+    @Autowired
     public BookController(BookService bookService){
-
-    }*/
+        this.bookService = bookService;
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Book> get(@PathVariable Integer id){
@@ -34,7 +33,7 @@ public class BookController {
         Book newBook = bookService.create(book);
         URI uri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/{id}").
                 buildAndExpand(newBook.getId()).toUri();
-        return ResponseEntity.created(uri).build();
+        return ResponseEntity.created(uri).body(newBook);
     }
 
     @PutMapping
@@ -49,7 +48,7 @@ public class BookController {
             newBook = bookService.create(book);
             URI uri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/{id}").
                     buildAndExpand(newBook.getId()).toUri();
-            return ResponseEntity.created(uri).build();
+            return ResponseEntity.created(uri).body(newBook);
         }
     }
 
