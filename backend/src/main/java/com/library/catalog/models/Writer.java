@@ -21,7 +21,7 @@ public class Writer {
     public static final String TABLE_NAME = "writer";
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true)
-    private Long id;
+    private Integer id;
 
     @Column(name = "name_theme", nullable = false, unique = true)
     @NotBlank

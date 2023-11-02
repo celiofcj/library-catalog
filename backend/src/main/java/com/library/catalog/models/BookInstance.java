@@ -19,7 +19,7 @@ public class BookInstance {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true)
-    private Long id;
+    private Integer id;
 
     @Column(name = "available", nullable = false)
     @NotNull
