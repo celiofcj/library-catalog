@@ -6,7 +6,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
 public interface WriterRepository extends JpaRepository<Writer, Integer> {
     List<Writer> findAllByBooksId(Integer id);
 }
