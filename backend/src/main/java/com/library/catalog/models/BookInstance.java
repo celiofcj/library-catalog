@@ -1,5 +1,6 @@
 package com.library.catalog.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -25,5 +26,6 @@ public class BookInstance {
     private Boolean available;
 
     @ManyToOne
+    @JsonIgnore
     private Book book;
 }

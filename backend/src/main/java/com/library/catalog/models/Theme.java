@@ -1,8 +1,8 @@
 package com.library.catalog.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,5 +27,6 @@ public class Theme {
     private String name;
 
     @ManyToMany(mappedBy = "themes")
+    @JsonIgnore
     private List<Book> books;
 }

@@ -1,5 +1,6 @@
 package com.library.catalog.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -27,5 +28,6 @@ public class Writer {
     private String name;
 
     @ManyToMany(mappedBy = "writers")
+    @JsonIgnore
     private List<Book> books;
 }
