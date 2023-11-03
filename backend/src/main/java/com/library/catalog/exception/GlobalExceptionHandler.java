@@ -3,6 +3,7 @@ package com.library.catalog.exception;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.*;
 import org.springframework.lang.NonNull;
 import org.springframework.validation.FieldError;
@@ -38,6 +39,16 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleDataIntegrityViolationException(DataIntegrityViolationException exception,
                                                                         WebRequest request){
         final String message = exception.getMostSpecificCause().getMessage();
+        log.error(message, exception);
+        ProblemDetail body = createProblemDetail(exception, HttpStatus.BAD_REQUEST, message,
+                null, null, request);
+        return handleExceptionInternal(exception, body, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    }
+
+    @ExceptionHandler(InvalidArgumentException.class)
+    public ResponseEntity<Object> handleInvalidArgumentException(InvalidArgumentException exception,
+                                                                           WebRequest request){
+        final String message = exception.getMessage();
         log.error(message, exception);
         ProblemDetail body = createProblemDetail(exception, HttpStatus.BAD_REQUEST, message,
                 null, null, request);

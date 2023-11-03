@@ -17,7 +17,8 @@ import lombok.Setter;
 public class BookInstance {
     public static final String TABLE_NAME = "instance";
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true)
     private Long id;
 

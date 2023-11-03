@@ -43,13 +43,13 @@ public class Book {
     private List<Theme> themes;
 
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST})
     @JoinTable(name = "writer_book",
             joinColumns = @JoinColumn(referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(referencedColumnName = "id"))
     private List<Writer> writers;
 
-    @OneToMany(mappedBy = "book")
+    @OneToMany(mappedBy = "book", cascade = {CascadeType.ALL})
     private List<BookInstance> examples;
 
     public Book(Book book){

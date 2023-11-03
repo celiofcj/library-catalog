@@ -1,26 +1,32 @@
 package com.library.catalog.services;
 
+import com.library.catalog.exception.InvalidArgumentException;
 import com.library.catalog.models.Book;
 import com.library.catalog.models.Theme;
+import com.library.catalog.models.Writer;
 import com.library.catalog.repositories.BookRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class BookService {
-    private BookRepository bookRepository;
-    private ThemeService themeService;
+    private final BookRepository bookRepository;
+    private final ThemeService themeService;
+    private final WriterService writerService;
 
     @Autowired
-    public BookService(BookRepository bookRepository, ThemeService themeService){
+    public BookService(BookRepository bookRepository, ThemeService themeService, WriterService writerService){
         this.bookRepository = bookRepository;
         this.themeService = themeService;
+        this.writerService = writerService;
     }
 
     public Book findById(Long id){
@@ -30,51 +36,76 @@ public class BookService {
                                             id + "}."));
     }
 
+    public List<Book> findAll(){
+        return bookRepository.findAll();
+    }
+
+    public List<Book> findByThemeId(Long id){
+        return bookRepository.findAllByThemesId(id);
+    }
+
+    public List<Book> findByWriterId(Long id){
+        return bookRepository.findAllByWritersId(id);
+    }
+
     @Transactional
     public Book create(Book book){
-        book.setId(null);
-        List<Theme> themes = getThemes(book);
-        Book newBook = new Book(book);
-        newBook.setThemes(themes);
+        Book newBook = copyWithValidThemesAndWriters(book);
+        newBook.setId(null);
 
         return bookRepository.save(newBook);
     }
 
     @Transactional
     public Book update(Book book) {
-            List<Theme> themes = getThemes(book);
-            Book newBook = new Book(book);
-            newBook.setThemes(themes);
+        Book newBook = copyWithValidThemesAndWriters(book);
 
-            return bookRepository.save(newBook);
+        Book bookSaved = findById(newBook.getId());
+        bookSaved.setTitle(newBook.getTitle());
+        bookSaved.setPublishYear(newBook.getPublishYear());
+        bookSaved.setPublisher(newBook.getPublisher());
+        bookSaved.setThemes(newBook.getThemes());
+        bookSaved.setWriters(newBook.getWriters());
+        bookSaved.setExamples(newBook.getExamples());
+
+
+        return bookRepository.save(bookSaved);
     }
 
     public void delete(Long id){
         bookRepository.delete(findById(id));
     }
 
-    private List<Theme> getThemes(Book book) {
-        List<Theme> newThemes = new ArrayList<>();
-        for(Theme theme : book.getThemes()){
-            boolean existsByName;
+    private Book copyWithValidThemesAndWriters(Book book){
+        Book newBook = new Book(book);
+        List<Theme> themes;
+        if(book.getThemes() == null) themes = new ArrayList<>();
+        else {
             try {
-                themeService.findByName(theme.getName());
-                existsByName = true;
+                themes = book.getThemes().stream()
+                        .map(theme -> themeService.findById(theme.getId()))
+                        .collect(Collectors.toList());
+                newBook.setThemes(themes);
             }
-            catch (EntityNotFoundException e){
-                existsByName = false;
-            }
-
-            if(theme.getId() == null && !existsByName){
-                newThemes.add(themeService.create(theme));
-            }
-            else if(existsByName){
-                newThemes.add(themeService.findByName(theme.getName()));
-            }
-            else{
-                newThemes.add(themeService.findById(theme.getId()));
+            catch (InvalidDataAccessApiUsageException e){
+                throw new InvalidArgumentException("Themes: Array should contain objects with id attribute.");
             }
         }
-        return newThemes;
+
+        List<Writer> writers;
+        if(book.getWriters() == null) writers = new ArrayList<>();
+        else {
+            try {
+                writers = book.getWriters().stream()
+                        .map(writer -> writerService.findById(writer.getId()))
+                        .collect(Collectors.toList());
+                newBook.setWriters(writers);
+            }
+            catch (InvalidDataAccessApiUsageException e){
+                throw new InvalidArgumentException("Writers: Array should contain objects with id attribute.");
+            }
+        }
+
+        return newBook;
     }
 }
