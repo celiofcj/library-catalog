@@ -23,7 +23,7 @@ public class Writer {
     @Column(name = "id", unique = true)
     private Long id;
 
-    @Column(name = "name_theme", nullable = false, unique = true)
+    @Column(name = "writer_name", nullable = false, unique = true)
     @NotBlank
     private String name;
 
