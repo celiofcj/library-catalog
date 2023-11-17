@@ -1,10 +1,10 @@
 package com.library.catalog.services;
 
-import com.library.catalog.exception.InvalidArgumentException;
 import com.library.catalog.models.Book;
 import com.library.catalog.models.Theme;
 import com.library.catalog.models.Writer;
 import com.library.catalog.repositories.BookRepository;
+import com.library.catalog.services.exceptions.InvalidArgumentException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
