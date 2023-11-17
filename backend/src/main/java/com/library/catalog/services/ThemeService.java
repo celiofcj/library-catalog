@@ -2,7 +2,7 @@ package com.library.catalog.services;
 
 import com.library.catalog.models.Theme;
 import com.library.catalog.repositories.ThemeRepository;
-import jakarta.persistence.EntityNotFoundException;
+import com.library.catalog.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,25 +12,54 @@ import java.util.Optional;
 
 @Service
 public class ThemeService {
-    @Autowired
     ThemeRepository themeRepository;
 
+    @Autowired
+    public ThemeService(ThemeRepository themeRepository){
+        this.themeRepository = themeRepository;
+    }
+
+    @Transactional(readOnly = true)
     public Theme findById(Long id){
         Optional<Theme> theme = themeRepository.findById(id);
 
-        return theme.orElseThrow(() -> new EntityNotFoundException("Not found theme with id: {" +
+        return theme.orElseThrow(() -> new ObjectNotFoundException("Not found theme with id: {" +
                 id + "}."));
     }
 
-    public Theme findByName(String name){
-        Optional<Theme> theme = themeRepository.findByName(name);
+    @Transactional(readOnly = true)
+    public List<Theme> findAll(){
+        return themeRepository.findAll();
+    }
 
-        return theme.orElseThrow(() -> new EntityNotFoundException("Not found theme with name: {" +
-                name + "}."));
+
+    @Transactional(readOnly = true)
+    public List<Theme> findAllByBooksId(Long id){
+        return themeRepository.findAllByBooksId(id);
     }
 
     @Transactional
     public Theme create(Theme theme){
+        Theme newTheme = new Theme();
+        theme.setName(theme.getName());
+        theme.setDescription(theme.getDescription());
+
         return themeRepository.save(theme);
+    }
+
+    @Transactional
+    public Theme update(Long id, Theme theme){
+        Theme themeSaved = themeRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException(
+                "Not found theme with id: {" + id + "}."));
+
+        themeSaved.setName(theme.getName());
+        themeSaved.setDescription(theme.getDescription());
+
+        return themeSaved;
+    }
+
+    @Transactional
+    public void delete(Long id){
+        themeRepository.deleteById(id);
     }
 }

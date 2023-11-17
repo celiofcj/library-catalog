@@ -9,5 +9,4 @@ import java.util.Optional;
 
 public interface ThemeRepository extends JpaRepository<Theme, Long> {
     List<Theme> findAllByBooksId(Long id);
-    Optional<Theme> findByName(String name);
 }
