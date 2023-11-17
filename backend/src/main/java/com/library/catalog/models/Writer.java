@@ -20,12 +20,16 @@ import java.util.List;
 public class Writer {
     public static final String TABLE_NAME = "writer";
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", unique = true)
+    @Column(name = "id")
     private Long id;
 
-    @Column(name = "writer_name", nullable = false, unique = true)
+    @Column(name = "writer_name", nullable = false)
     @NotBlank
     private String name;
+
+    @Column(name = "bio", nullable = false)
+    @NotNull
+    private String bio;
 
     @ManyToMany(mappedBy = "writers")
     @JsonIgnore
