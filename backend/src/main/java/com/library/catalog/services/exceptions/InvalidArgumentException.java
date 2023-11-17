@@ -1,4 +1,5 @@
-package com.library.catalog.exception;
+package com.library.catalog.services.exceptions;
+
 
 public class InvalidArgumentException extends RuntimeException{
     public InvalidArgumentException() {
