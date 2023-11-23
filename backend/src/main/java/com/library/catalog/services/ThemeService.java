@@ -49,8 +49,7 @@ public class ThemeService {
 
     @Transactional
     public Theme update(Long id, Theme theme){
-        Theme themeSaved = themeRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException(
-                "Not found theme with id: {" + id + "}."));
+        Theme themeSaved = findById(id);
 
         themeSaved.setName(theme.getName());
         themeSaved.setDescription(theme.getDescription());
