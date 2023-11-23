@@ -5,7 +5,7 @@ import com.library.catalog.models.Theme;
 import com.library.catalog.models.Writer;
 import com.library.catalog.repositories.BookRepository;
 import com.library.catalog.services.exceptions.InvalidArgumentException;
-import jakarta.persistence.EntityNotFoundException;
+import com.library.catalog.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.stereotype.Service;
@@ -32,7 +32,7 @@ public class BookService {
     public Book findById(Long id){
         Optional<Book> book = bookRepository.findById(id);
 
-        return book.orElseThrow(() -> new EntityNotFoundException("Not found book with id: {" +
+        return book.orElseThrow(() -> new ObjectNotFoundException("Not found book with id: {" +
                                             id + "}."));
     }
 
