@@ -49,7 +49,7 @@ public class ThemeController {
         URI uri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/{id}")
                 .buildAndExpand(newTheme.getId()).toUri();
 
-        return ResponseEntity.created(uri).body(theme);
+        return ResponseEntity.created(uri).body(newTheme);
     }
 
     @PatchMapping("/{id}")

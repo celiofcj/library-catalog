@@ -55,7 +55,7 @@ public class BookInstanceController {
     public ResponseEntity<BookInstance> update(@PathVariable Long id, @Valid @RequestBody BookInstance bookInstance){
         BookInstance updatedBookInstance = bookInstanceService.update(id, bookInstance);
 
-        return ResponseEntity.ok(bookInstance);
+        return ResponseEntity.ok(updatedBookInstance);
     }
 
     @DeleteMapping("/{id}")
