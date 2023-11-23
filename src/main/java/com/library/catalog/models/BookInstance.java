@@ -23,7 +23,7 @@ public class BookInstance {
     private Long id;
 
     @Column(name = "available", nullable = false)
-    @NotNull
+    @NotNull(message = "Available should not be null")
     private Boolean available;
 
     @ManyToOne

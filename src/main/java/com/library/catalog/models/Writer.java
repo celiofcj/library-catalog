@@ -24,11 +24,11 @@ public class Writer {
     private Long id;
 
     @Column(name = "writer_name", nullable = false)
-    @NotBlank
+    @NotBlank(message = "Name should not be blank")
     private String name;
 
     @Column(name = "bio", nullable = false)
-    @NotNull
+    @NotNull(message = "Bio should not be null")
     private String bio;
 
     @ManyToMany(mappedBy = "writers")

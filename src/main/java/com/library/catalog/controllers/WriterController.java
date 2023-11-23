@@ -2,6 +2,7 @@ package com.library.catalog.controllers;
 
 import com.library.catalog.models.Writer;
 import com.library.catalog.services.WriterService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -40,7 +41,7 @@ public class WriterController {
     }
 
     @PostMapping
-    public ResponseEntity<Writer> create(@RequestBody Writer writer){
+    public ResponseEntity<Writer> create(@Valid @RequestBody Writer writer){
         Writer newWriter = writerService.create(writer);
         URI uri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/{id}").buildAndExpand(newWriter.getId()).toUri();
@@ -49,7 +50,7 @@ public class WriterController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Writer> update(@PathVariable Long id, @RequestBody Writer writer){
+    public ResponseEntity<Writer> update(@PathVariable Long id, @Valid @RequestBody Writer writer){
         Writer updateWriter = writerService.update(id, writer);
 
         return ResponseEntity.ok(updateWriter);

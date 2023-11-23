@@ -2,6 +2,7 @@ package com.library.catalog.controllers;
 
 import com.library.catalog.models.Theme;
 import com.library.catalog.services.ThemeService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -42,7 +43,7 @@ public class ThemeController {
     }
 
     @PostMapping
-    public ResponseEntity<Theme> create(@RequestBody Theme theme){
+    public ResponseEntity<Theme> create(@Valid @RequestBody Theme theme){
         Theme newTheme = this.themeService.create(theme);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/{id}")
@@ -52,7 +53,7 @@ public class ThemeController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Theme> update(@PathVariable Long id, @RequestBody Theme theme){
+    public ResponseEntity<Theme> update(@PathVariable Long id, @Valid @RequestBody Theme theme){
         Theme updateTheme = themeService.update(id, theme);
 
         return ResponseEntity.ok(updateTheme);

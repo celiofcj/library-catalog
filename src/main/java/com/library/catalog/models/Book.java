@@ -25,7 +25,7 @@ public class Book {
     private Long id;
 
     @Column(name = "title", unique = true, nullable = false)
-    @NotBlank
+    @NotBlank(message = "Title should not be blank")
     private String title;
 
     @Column(name = "publish_year")

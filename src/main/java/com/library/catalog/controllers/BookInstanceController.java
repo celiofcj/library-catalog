@@ -2,6 +2,7 @@ package com.library.catalog.controllers;
 
 import com.library.catalog.models.BookInstance;
 import com.library.catalog.services.BookInstanceService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -42,7 +43,7 @@ public class BookInstanceController {
     }
 
     @PostMapping
-    public ResponseEntity<BookInstance> create(@RequestBody BookInstance bookInstance){
+    public ResponseEntity<BookInstance> create(@Valid @RequestBody BookInstance bookInstance){
         BookInstance newBookInstance = bookInstanceService.create(bookInstance);
         URI uri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/{id}")
                 .buildAndExpand(newBookInstance.getId()).toUri();
@@ -51,7 +52,7 @@ public class BookInstanceController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<BookInstance> update(@PathVariable Long id, @RequestBody BookInstance bookInstance){
+    public ResponseEntity<BookInstance> update(@PathVariable Long id, @Valid @RequestBody BookInstance bookInstance){
         BookInstance updatedBookInstance = bookInstanceService.update(id, bookInstance);
 
         return ResponseEntity.ok(bookInstance);

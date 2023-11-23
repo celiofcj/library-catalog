@@ -24,11 +24,11 @@ public class Theme {
     private Long id;
 
     @Column(name = "theme_name", nullable = false, unique = true)
-    @NotBlank
+    @NotBlank(message = "Name should not be blank")
     private String name;
 
     @Column(name = "description", nullable = false)
-    @NotNull
+    @NotNull(message = "Description should not be null")
     private String description;
 
     @ManyToMany(mappedBy = "themes")
