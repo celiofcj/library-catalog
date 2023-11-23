@@ -41,10 +41,10 @@ public class ThemeService {
     @Transactional
     public Theme create(Theme theme){
         Theme newTheme = new Theme();
-        theme.setName(theme.getName());
-        theme.setDescription(theme.getDescription());
+        newTheme.setName(theme.getName());
+        newTheme.setDescription(theme.getDescription());
 
-        return themeRepository.save(theme);
+        return themeRepository.save(newTheme);
     }
 
     @Transactional
