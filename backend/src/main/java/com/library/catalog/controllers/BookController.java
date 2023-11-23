@@ -25,54 +25,45 @@ public class BookController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Book> get(@PathVariable Long id){
+    public ResponseEntity<Book> findById(@PathVariable Long id){
         Book book = bookService.findById(id);
         return ResponseEntity.ok(book);
     }
 
     @GetMapping
-    public ResponseEntity<List<Book>> getAll(){
+    public ResponseEntity<List<Book>> findAll(){
         List<Book> books = bookService.findAll();
 
         return ResponseEntity.ok(books);
     }
 
-    @GetMapping("/theme/{id}")
-    public ResponseEntity<List<Book>> getAllWithThemeId(@PathVariable Long id){
-        List<Book> books = bookService.findByThemeId(id);
+    @GetMapping("/theme/{themeId}")
+    public ResponseEntity<List<Book>> findAllWithThemeId(@PathVariable Long themeId){
+        List<Book> books = bookService.findByThemeId(themeId);
 
         return ResponseEntity.ok(books);
     }
 
-    @GetMapping("/writer/{id}")
-    public ResponseEntity<List<Book>> getAllWithWriterId(@PathVariable Long id){
-        List<Book> books = bookService.findByWriterId(id);
+    @GetMapping("/writer/{writerId}")
+    public ResponseEntity<List<Book>> findAllWithWriterId(@PathVariable Long writerId){
+        List<Book> books = bookService.findByWriterId(writerId);
 
         return ResponseEntity.ok(books);
     }
 
     @PostMapping
-    public ResponseEntity<Book> post(@Valid @RequestBody Book book){
+    public ResponseEntity<Book> create(@Valid @RequestBody Book book){
         Book newBook = bookService.create(book);
         URI uri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/{id}").
                 buildAndExpand(newBook.getId()).toUri();
         return ResponseEntity.created(uri).body(newBook);
     }
 
-    @PutMapping
-    public ResponseEntity<Book> put(@Valid @RequestBody Book book){
-        Book newBook;
-        try{
-            bookService.findById(book.getId());
-            newBook = bookService.update(book);
-            return ResponseEntity.ok(newBook);
-        }
-        catch (EntityNotFoundException e){
-            newBook = bookService.create(book);
-            URI uri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/{id}").
-                    buildAndExpand(newBook.getId()).toUri();
-            return ResponseEntity.created(uri).body(newBook);
-        }
+    @PatchMapping("/{id}")
+    public ResponseEntity<Book> update(@PathVariable Long id, @RequestBody Book book){
+        Book bookUpdated = bookService.update(id, book);
+
+        return ResponseEntity.ok(bookUpdated);
     }
 
     @DeleteMapping("/{id}")

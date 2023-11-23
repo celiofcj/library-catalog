@@ -29,6 +29,7 @@ public class BookService {
         this.writerService = writerService;
     }
 
+    @Transactional(readOnly = true)
     public Book findById(Long id){
         Optional<Book> book = bookRepository.findById(id);
 
@@ -36,14 +37,17 @@ public class BookService {
                                             id + "}."));
     }
 
+    @Transactional(readOnly = true)
     public List<Book> findAll(){
         return bookRepository.findAll();
     }
 
+    @Transactional(readOnly = true)
     public List<Book> findByThemeId(Long id){
         return bookRepository.findAllByThemesId(id);
     }
 
+    @Transactional(readOnly = true)
     public List<Book> findByWriterId(Long id){
         return bookRepository.findAllByWritersId(id);
     }
@@ -57,10 +61,10 @@ public class BookService {
     }
 
     @Transactional
-    public Book update(Book book) {
+    public Book update(Long id, Book book) {
         Book newBook = copyWithValidThemesAndWriters(book);
 
-        Book bookSaved = findById(newBook.getId());
+        Book bookSaved = findById(id);
         bookSaved.setTitle(newBook.getTitle());
         bookSaved.setPublishYear(newBook.getPublishYear());
         bookSaved.setPublisher(newBook.getPublisher());
@@ -72,6 +76,7 @@ public class BookService {
         return bookRepository.save(bookSaved);
     }
 
+    @Transactional
     public void delete(Long id){
         bookRepository.delete(findById(id));
     }
@@ -85,12 +90,12 @@ public class BookService {
                 themes = book.getThemes().stream()
                         .map(theme -> themeService.findById(theme.getId()))
                         .collect(Collectors.toList());
-                newBook.setThemes(themes);
             }
             catch (InvalidDataAccessApiUsageException e){
-                throw new InvalidArgumentException("Themes: Array should contain objects with id attribute.");
+                throw new InvalidArgumentException("Themes: List should contain objects with id attribute.");
             }
         }
+        newBook.setThemes(themes);
 
         List<Writer> writers;
         if(book.getWriters() == null) writers = new ArrayList<>();
@@ -99,12 +104,12 @@ public class BookService {
                 writers = book.getWriters().stream()
                         .map(writer -> writerService.findById(writer.getId()))
                         .collect(Collectors.toList());
-                newBook.setWriters(writers);
             }
             catch (InvalidDataAccessApiUsageException e){
-                throw new InvalidArgumentException("Writers: Array should contain objects with id attribute.");
+                throw new InvalidArgumentException("Writers: List should contain objects with id attribute.");
             }
         }
+        newBook.setWriters(writers);
 
         return newBook;
     }
