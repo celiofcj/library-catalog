@@ -73,12 +73,12 @@ public class BookService {
         bookSaved.setExamples(newBook.getExamples());
 
 
-        return bookRepository.save(bookSaved);
+        return bookSaved;
     }
 
     @Transactional
     public void delete(Long id){
-        bookRepository.delete(findById(id));
+        bookRepository.deleteById(id);
     }
 
     private Book copyWithValidThemesAndWriters(Book book){

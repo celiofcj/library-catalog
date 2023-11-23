@@ -44,7 +44,7 @@ public class BookInstanceService {
         newBookInstance.setBook(bookInstance.getBook());
         newBookInstance.setAvailable(bookInstance.getAvailable());
 
-        return newBookInstance;
+        return bookInstanceRepository.save(newBookInstance);
     }
 
     @Transactional
@@ -54,7 +54,7 @@ public class BookInstanceService {
         savedBookInstance.setBook(bookInstance.getBook());
         savedBookInstance.setAvailable(bookInstance.getAvailable());
 
-        return bookInstanceRepository.save(savedBookInstance);
+        return savedBookInstance;
     }
 
     @Transactional

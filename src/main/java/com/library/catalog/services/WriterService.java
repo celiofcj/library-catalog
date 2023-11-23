@@ -44,7 +44,7 @@ public class WriterService {
         newWriter.setName(writer.getName());
         newWriter.setBio(writer.getBio());
 
-        return newWriter;
+        return writerRepository.save(newWriter);
     }
 
     @Transactional
