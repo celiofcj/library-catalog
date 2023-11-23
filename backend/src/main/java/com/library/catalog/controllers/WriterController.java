@@ -55,7 +55,7 @@ public class WriterController {
         return ResponseEntity.ok(updateWriter);
     }
 
-    @DeleteMapping("/id")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id){
         writerService.delete(id);
 
