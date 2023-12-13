@@ -24,15 +24,20 @@ async function getAllWriters(){
 
 function registerWriter() {
     let parts = document.getElementById('writersOptions').value.split(';');
+    let id = parts[0];
     let name = parts[1];
     let line = document.getElementById("body-writer-select");
 
     line.innerHTML += `
-            <tr>
+            <tr id="writers_${id}">
                 <td>${name}</td>
+                <td>
+                    <button class="btn btn-primary mx-auto d-block"
+                     type="button" onclick="remove('writers', ${id})">
+                     Remove
+                    </button>
+                </td>
             </tr>`;
-
-    let id = parts[0];
     let writers = JSON.parse(window.localStorage.getItem('writers')) || [];
     writers.push(id);
     window.localStorage.setItem('writers', JSON.stringify(writers));
@@ -64,15 +69,20 @@ async function getAllThemes(){
 
 function registerTheme() {
     let parts = document.getElementById('themesOptions').value.split(';');
+    let id = parts[0];
     let name = parts[1];
     let line = document.getElementById("body-theme-select");
 
     line.innerHTML += `
-            <tr>
-                <td>${name}</td>
-            </tr>`;
-
-    let id = parts[0];
+                <tr id="themes_${id}">  
+                    <td>${name}</td>
+                    <td class="remove-button">
+                        <button class="btn btn-primary mx-auto d-block"
+                         type="button" onclick="remove('themes', ${id})">
+                         Remove
+                        </button>
+                    </td>
+                </tr>`;
     let themes = JSON.parse(window.localStorage.getItem('themes')) || [];
     themes.push(id);
     window.localStorage.setItem('themes', JSON.stringify(themes));
@@ -82,9 +92,8 @@ async function registerBook(){
     let title = document.getElementById("title").value;
     let year = document.getElementById("year").value;
     let publisher = document.getElementById("publisher").value;
-    console.log('publisher' + publisher);
-    let writers = adicionarLabel(JSON.parse(window.localStorage.getItem('writers')));
-    let themes = adicionarLabel(JSON.parse(window.localStorage.getItem('themes')));
+    let writers = addLabel(JSON.parse(window.localStorage.getItem('writers')));
+    let themes = addLabel(JSON.parse(window.localStorage.getItem('themes')));
 
     const response = await fetch("http://localhost:8080/book", {
         method: "POST",
@@ -101,6 +110,8 @@ async function registerBook(){
         })
     });
 
+    console.log(response);
+
     if(response.ok) {
         window.localStorage.removeItem('writers');
         window.localStorage.removeItem('themes');
@@ -108,11 +119,16 @@ async function registerBook(){
     }
 }
 
-function adicionarLabel(arrayEmJson){
-    let mapped = arrayEmJson.map(id => ({ id }))
+function addLabel(arrayEmJson){
+    return arrayEmJson.map(id => ({id}));
+}
 
-    console.log(mapped);
-    return mapped;
+function remove(attribute, id){
+    console.log(attribute + ' ' + id);
+    document.getElementById(`${attribute}_${id}`).remove();
+    let data = JSON.parse(window.localStorage.getItem(`${attribute}`));
+    data = data.filter(item => item !== id.toString())
+    window.localStorage.setItem(`${attribute}`, JSON.stringify(data));
 }
 
 
