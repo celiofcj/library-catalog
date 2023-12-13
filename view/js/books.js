@@ -52,13 +52,10 @@ function getWritersNames(book){
     let writerNames = "";
     const maximo = 4;
     for(let i = 0; i < maximo && writers[i] != null; i++){
-        if(writers[i] != null){
             if(i > 0){
                 writerNames += ", ";
             }
             writerNames += writers[i].name;
-            break;
-        }
 
         if(writers[maximo] != null){
             writerNames += "...";
