@@ -1,8 +1,12 @@
 package com.library.catalog.controllers;
 
+import com.library.catalog.dto.WriterConverter;
+import com.library.catalog.dto.WriterInDTO;
+import com.library.catalog.dto.WriterOutDTO;
 import com.library.catalog.models.Writer;
 import com.library.catalog.services.WriterService;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -14,9 +18,12 @@ import java.util.List;
 @RestController
 public class WriterController {
     private WriterService writerService;
+    private WriterConverter writerConverter;
 
-    public WriterController(WriterService writerService){
+    @Autowired
+    public WriterController(WriterService writerService, WriterConverter writerConverter){
         this.writerService = writerService;
+        this.writerConverter = writerConverter;
     }
 
     @GetMapping("/{id}")
@@ -27,33 +34,36 @@ public class WriterController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Writer>> findAll(){
+    public ResponseEntity<List<WriterOutDTO>> findAll(){
         List<Writer> writers = writerService.findAll();
-
-        return ResponseEntity.ok(writers);
+        List<WriterOutDTO> dtos = writerConverter.entityToOutDTO(writers);
+        return ResponseEntity.ok(dtos);
     }
 
     @GetMapping("/book/{bookId}")
-    public ResponseEntity<List<Writer>> findAllByBookId(@PathVariable Long bookId){
+    public ResponseEntity<List<WriterOutDTO>> findAllByBookId(@PathVariable Long bookId){
         List<Writer> writers = writerService.findAllByBookId(bookId);
 
-        return ResponseEntity.ok(writers);
+        List<WriterOutDTO> dtos = writerConverter.entityToOutDTO(writers);
+        return ResponseEntity.ok(dtos);
     }
 
     @PostMapping
-    public ResponseEntity<Writer> create(@Valid @RequestBody Writer writer){
+    public ResponseEntity<WriterOutDTO> create(@Valid @RequestBody WriterInDTO inDTO){
+        Writer writer = writerConverter.inDtoToEntity(inDTO);
         Writer newWriter = writerService.create(writer);
+        WriterOutDTO outDTO = writerConverter.entityToOutDTO(newWriter);
         URI uri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/{id}").buildAndExpand(newWriter.getId()).toUri();
-
-        return ResponseEntity.created(uri).body(newWriter);
+        return ResponseEntity.created(uri).body(outDTO);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Writer> update(@PathVariable Long id, @Valid @RequestBody Writer writer){
-        Writer updateWriter = writerService.update(id, writer);
-
-        return ResponseEntity.ok(updateWriter);
+    public ResponseEntity<WriterOutDTO> update(@PathVariable Long id, @Valid @RequestBody WriterInDTO inDTO){
+        Writer writer = writerConverter.inDtoToEntity(inDTO);
+        Writer updatedWriter = writerService.update(id, writer);
+        WriterOutDTO outDTO = writerConverter.entityToOutDTO(updatedWriter);
+        return ResponseEntity.ok(outDTO);
     }
 
     @DeleteMapping("/{id}")
