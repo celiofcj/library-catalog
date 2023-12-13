@@ -1,0 +1,71 @@
+.column {
+    float: left;
+    padding: 10px;
+}
+
+.column.side {
+    width: 25%;
+}
+
+.column.middle {
+    width: 50%;
+}
+
+.topnav {
+    overflow: hidden;
+    background-color: slategrey;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.topnav a {
+    float: left;
+    display: block;
+    justify-content: center;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    width: 100%;
+}
+
+.topnav .nav-register {
+    background-color: #2f3535;
+}
+
+.topnav a:hover {
+    background-color: #ddd;
+    color: black;
+}
+.btn.btn-primary{
+    margin-left: 89.3%;
+}
+
+.require {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 2%;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.require h1{
+    text-align: center;
+}
+
+.require h3{
+    text-align: center;
+}
+
+.require h2{
+    text-align: center;
+}
+
+.require button{
+    margin-right: 0.5%;
+}
+
+.options {
+    width: 100%;
+}
+

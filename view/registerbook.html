@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+  <nav>
+    <div class="topnav">
+      <a href="books.html">Books</a>
+      <a href="authors.html">Authors</a>
+      <a href="themes.html">Themes</a>
+    </div>
+  </nav>
+  <div class="row">
+    <div class="column side"></div>
+    <div class="column middle">
+      <form class="require">
+        <h2>Register a new book</h2>
+        <div class="mb-3">
+          <label for="title" class="form-label">Title:</label>
+          <input class="form-control" id="title" placeholder="Title" required="required">
+        </div>
+        <div class="mb-3">
+          <label for="year" class="form-label">Year of publishment:</label>
+          <input type="number" class="form-control" id="year" placeholder="Year" required="required">
+        </div>
+        <div class="mb-3">
+          <label for="publisher" class="form-label">Publisher:</label>
+          <input class="form-control" id="publisher" placeholder="Publisher" required="required">
+        </div>
+        <div class="mb-3">
+          <label for="writersOptions" class="form-label">Writres:</label>
+          <div class="selectOptions">
+            <select id="writersOptions" class="form-select form-select-lg mb-3 options" aria-label=".form-select-lg example" onchange="registerWriter()">
+              <option selected>Select the writer: </option>
+            </select>
+          </div>
+          <table class="table darkred table-bordered">
+            <thead id="header-writer-select" class="thead">
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody id="body-writer-select" class=""></tbody>
+          </table>
+        </div>
+        <div class="mb-3">
+          <label for="themesOptions" class="form-label">Themes:</label>
+          <div class="selectOptions">
+            <select id="themesOptions" class="form-select form-select-lg mb-3 options" aria-label=".form-select-lg example" onchange="registerTheme()">
+              <option selected>Select the theme: </option>
+            </select>
+          </div>
+          <table class="table darkred table-bordered">
+            <thead id="themes-theme-select" class="thead">
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody id="body-theme-select" class=""></tbody>
+          </table>
+        </div>
+        <button type="button" class="btn btn-primary register-button" onclick="registerBook()">Submit</button>
+      </form>
+    </div>
+    <div class="column side"></div>
+  </div>
+
+  <script src="js/registerbook.js"></script>
+</body>
+</html>
