@@ -1,5 +1,8 @@
 package com.library.catalog.controllers;
 
+import com.library.catalog.dto.ThemeConverter;
+import com.library.catalog.dto.ThemeInDTO;
+import com.library.catalog.dto.ThemeOutDTO;
 import com.library.catalog.models.Theme;
 import com.library.catalog.services.ThemeService;
 import jakarta.validation.Valid;
@@ -15,48 +18,55 @@ import java.util.List;
 @RestController
 public class ThemeController {
     private final ThemeService themeService;
+    private final ThemeConverter themeConverter;
 
     @Autowired
-    public ThemeController(ThemeService themeService){
+    public ThemeController(ThemeService themeService, ThemeConverter themeConverter){
         this.themeService = themeService;
+        this.themeConverter = themeConverter;
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Theme> findById(@PathVariable Long id){
+    public ResponseEntity<ThemeOutDTO> findById(@PathVariable Long id){
         Theme theme = themeService.findById(id);
+        ThemeOutDTO dto = themeConverter.entityToOutDTO(theme);
 
-        return ResponseEntity.ok(theme);
+        return ResponseEntity.ok(dto);
     }
 
     @GetMapping
-    public ResponseEntity<List<Theme>> findAll(){
+    public ResponseEntity<List<ThemeOutDTO>> findAll(){
         List<Theme> themes = themeService.findAll();
-
-        return ResponseEntity.ok(themes);
+        List<ThemeOutDTO> dtos = themeConverter.entityToOutDTO(themes);
+        return ResponseEntity.ok(dtos);
     }
 
     @GetMapping("/book/{bookId}")
-    public ResponseEntity<List<Theme>> findAllByBookId(@PathVariable Long bookId){
+    public ResponseEntity<List<ThemeOutDTO>> findAllByBookId(@PathVariable Long bookId){
         List<Theme> themes = themeService.findAllByBooksId(bookId);
-
-        return ResponseEntity.ok(themes);
+        List<ThemeOutDTO> dtos = themeConverter.entityToOutDTO(themes);
+        return ResponseEntity.ok(dtos);
     }
 
     @PostMapping
-    public ResponseEntity<Theme> create(@Valid @RequestBody Theme theme){
+    public ResponseEntity<ThemeOutDTO> create(@Valid @RequestBody ThemeInDTO inDTO){
+        Theme theme = themeConverter.inDTOToEntity(inDTO);
         Theme newTheme = this.themeService.create(theme);
+        ThemeOutDTO outDTO = themeConverter.entityToOutDTO(newTheme);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/{id}")
                 .buildAndExpand(newTheme.getId()).toUri();
 
-        return ResponseEntity.created(uri).body(newTheme);
+        return ResponseEntity.created(uri).body(outDTO);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Theme> update(@PathVariable Long id, @Valid @RequestBody Theme theme){
-        Theme updateTheme = themeService.update(id, theme);
+    public ResponseEntity<ThemeOutDTO> update(@PathVariable Long id, @Valid @RequestBody ThemeInDTO inDTO){
+        Theme theme = themeConverter.inDTOToEntity(inDTO);
+        Theme updatedTheme = themeService.update(id, theme);
+        ThemeOutDTO outDTO = themeConverter.entityToOutDTO(updatedTheme);
 
-        return ResponseEntity.ok(updateTheme);
+        return ResponseEntity.ok(outDTO);
     }
 
     @DeleteMapping("/{id}")
