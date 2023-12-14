@@ -27,10 +27,11 @@ public class WriterController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Writer> findById(@PathVariable Long id){
+    public ResponseEntity<WriterOutDTO> findById(@PathVariable Long id){
         Writer writer = writerService.findById(id);
+        WriterOutDTO dto = writerConverter.entityToOutDTO(writer);
 
-        return ResponseEntity.ok(writer);
+        return ResponseEntity.ok(dto);
     }
 
     @GetMapping
