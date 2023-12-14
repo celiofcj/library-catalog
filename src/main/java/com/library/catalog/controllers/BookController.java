@@ -1,5 +1,8 @@
 package com.library.catalog.controllers;
 
+import com.library.catalog.dto.BookConverter;
+import com.library.catalog.dto.BookInDTO;
+import com.library.catalog.dto.BookOutDTO;
 import com.library.catalog.models.Book;
 import com.library.catalog.services.BookService;
 
@@ -18,52 +21,63 @@ import java.util.List;
 @RestController
 public class BookController {
     private BookService bookService;
+    private BookConverter bookConverter;
 
     @Autowired
-    public BookController(BookService bookService){
+    public BookController(BookService bookService, BookConverter bookConverter){
         this.bookService = bookService;
+        this.bookConverter = bookConverter;
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Book> findById(@PathVariable Long id){
+    public ResponseEntity<BookOutDTO> findById(@PathVariable Long id){
         Book book = bookService.findById(id);
-        return ResponseEntity.ok(book);
+        BookOutDTO outDTO = bookConverter.entityToOutDTO(book);
+        return ResponseEntity.ok(outDTO);
     }
 
     @GetMapping
-    public ResponseEntity<List<Book>> findAll(){
+    public ResponseEntity<List<BookOutDTO>> findAll(){
         List<Book> books = bookService.findAll();
+        List<BookOutDTO> outDTOS = bookConverter.entityToOutDTO(books);
 
-        return ResponseEntity.ok(books);
+        return ResponseEntity.ok(outDTOS);
     }
 
     @GetMapping("/theme/{themeId}")
-    public ResponseEntity<List<Book>> findAllWithThemeId(@PathVariable Long themeId){
+    public ResponseEntity<List<BookOutDTO>> findAllWithThemeId(@PathVariable Long themeId){
         List<Book> books = bookService.findByThemeId(themeId);
+        List<BookOutDTO> outDTOS = bookConverter.entityToOutDTO(books);
 
-        return ResponseEntity.ok(books);
+        return ResponseEntity.ok(outDTOS);
     }
 
     @GetMapping("/writer/{writerId}")
-    public ResponseEntity<List<Book>> findAllWithWriterId(@PathVariable Long writerId){
+    public ResponseEntity<List<BookOutDTO>> findAllWithWriterId(@PathVariable Long writerId){
         List<Book> books = bookService.findByWriterId(writerId);
+        List<BookOutDTO> outDTOS = bookConverter.entityToOutDTO(books);
 
-        return ResponseEntity.ok(books);
+        return ResponseEntity.ok(outDTOS);
     }
 
     @PostMapping
-    public ResponseEntity<Book> create(@Valid @RequestBody Book book){
+    public ResponseEntity<BookOutDTO> create(@Valid @RequestBody BookInDTO inDTO){
+        Book book = bookConverter.inDTOToEntity(inDTO);
         Book newBook = bookService.create(book);
+        BookOutDTO outDTO = bookConverter.entityToOutDTO(newBook);
         URI uri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/{id}").
                 buildAndExpand(newBook.getId()).toUri();
-        return ResponseEntity.created(uri).body(newBook);
+
+        return ResponseEntity.created(uri).body(outDTO);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Book> update(@PathVariable Long id, @Valid @RequestBody Book book){
+    public ResponseEntity<BookOutDTO> update(@PathVariable Long id, @Valid @RequestBody BookInDTO inDTO){
+        Book book = bookConverter.inDTOToEntity(inDTO);
         Book bookUpdated = bookService.update(id, book);
+        BookOutDTO outDTO = bookConverter.entityToOutDTO(bookUpdated);
 
-        return ResponseEntity.ok(bookUpdated);
+        return ResponseEntity.ok(outDTO);
     }
 
     @DeleteMapping("/{id}")

@@ -92,8 +92,12 @@ async function registerBook(){
     let title = document.getElementById("title").value;
     let year = document.getElementById("year").value;
     let publisher = document.getElementById("publisher").value;
-    let writers = addLabel(JSON.parse(window.localStorage.getItem('writers')));
-    let themes = addLabel(JSON.parse(window.localStorage.getItem('themes')));
+    let writers = JSON.parse(window.localStorage.getItem('writers')).map(function(numString){
+        return parseInt(numString);
+    });
+    let themes = JSON.parse(window.localStorage.getItem('themes')).map(function (numString){
+        return parseInt(numString);
+    });
 
     const response = await fetch("http://localhost:8080/book", {
         method: "POST",
@@ -117,10 +121,6 @@ async function registerBook(){
         window.localStorage.removeItem('themes');
         window.location.href = "books.html";
     }
-}
-
-function addLabel(arrayEmJson){
-    return arrayEmJson.map(id => ({id}));
 }
 
 function remove(attribute, id){
