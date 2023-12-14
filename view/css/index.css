@@ -1,16 +1,3 @@
-.column {
-    float: left;
-    padding: 10px;
-}
-
-.column.side {
-    width: 25%;
-}
-
-.column.middle {
-    width: 50%;
-}
-
 .topnav {
     overflow: hidden;
     background-color: slategrey;
@@ -37,11 +24,18 @@
     background-color: #ddd;
     color: black;
 }
-.btn.btn-primary{
-    margin-left: 89.3%;
+
+.center-box {
+    padding-top: 2%;
+    display: flex;
+    justify-content: center;
 }
 
-.require {
+.center-box form, .content-box {
+    min-width: 60%;
+}
+
+.content-box {
     border-radius: 5px;
     background-color: #f2f2f2;
     padding: 2%;
@@ -49,19 +43,19 @@
     margin-right: 10%;
 }
 
-.require h1{
+.content-box h1{
     text-align: center;
 }
 
-.require h3{
+.content-box h3{
     text-align: center;
 }
 
-.require h2{
+.content-box h2{
     text-align: center;
 }
 
-.require button{
+.content-box button{
     margin-right: 0.5%;
 }
 
