@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/index.css">
+  </head>
+  <body>
+    <nav>
+      <div class="topnav">
+        <a href="registerbook.html" class="nav-register">Register a book</a>
+        <a href="books.html">Books</a>
+        <a href="writers.html">Writers</a>
+        <a href="themes.html">Themes</a>
+      </div>
+    </nav>
+    <div class="center-box">
+      <div class ="content-box">
+        <div id="main-info-book">
+          <div id="actual-data">
+            <h5 class="item-title">Title: </h5><p id="title"></p>
+            <h5 class="item-title">Year of publishment</h5><p id="year"></p>
+            <h5 class="item-title">Publisher:</h5><p id="publisher"></p>
+          </div>
+          <div id="update-data">
+            <form>
+              <div class="mb-3">
+                <label for="new-title" class="form-label">New title:</label>
+                <input id="new-title" placeholder="Title">
+              </div>
+              <div class="mb-3">
+                <label for="new-year" class="form-label">New year of publishment:</label>
+                <input type="number" id="new-year" placeholder="Year">
+              </div>
+              <div class="mb-3">
+                <label for="new-publisher" class="form-label">New Publisher:</label>
+                <input id="new-publisher" placeholder="Publisher">
+              </div>
+              <button type="button" class="btn btn-dark btn-block mx-auto d-block" onclick="updateBook()">Update</button>
+            </form>
+          </div>
+        </div>
+        <div>
+          <h3>Writers</h3>
+          <table class="table darkred table-bordered">
+            <thead id="header-writer-show" class="thead">
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody id="body-writer-show"></tbody>
+          </table>
+        </div>
+        <div>
+          <h3>Themes</h3>
+          <table class="table darkred table-bordered">
+            <thead id="header-theme-show" class="thead">
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody id="body-theme-show"></tbody>
+          </table>
+        </div>
+        <div>
+          <h3>Instances</h3>
+          <button style="margin-bottom: 1%;" class="btn btn-dark mx-auto d-block" type="button" onclick="addInstance()">Create new instance</button>
+          <table class="table darkred table-bordered">
+            <thead id="header-instance-show" class="thead">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Status</th>
+              <th scope="row"></th>
+              <th scope="row"></th>
+            </tr>
+            </thead>
+            <tbody id="body-instance-show"></tbody>
+          </table>
+          </div>
+        <button type="button" class= "btn btn-danger btn-lg mx-auto d-block" onclick="deleteBook()">Delete book</button>
+      </div>
+    </div>
+    <script src="js/bookdetail.js"></script>
+  </body>
+</html>

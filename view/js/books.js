@@ -9,7 +9,7 @@ async function displayBooks() {
         let authors = getWritersNames(book);
         line += `<tr>
                     <th>${i}</th>
-                    <td>${book.title}</td>
+                    <td><a href="#" class = "redirect" onclick="bookDetails(${book.id})">${book.title}</a></td>
                     <td>${book.publishYear}</td>
                     <td>${book.publisher}</td>
                     <td>${themes}</td>
@@ -62,6 +62,11 @@ function getWritersNames(book){
         }
     }
     return writerNames;
+}
+
+function bookDetails(bookId){
+    window.localStorage.setItem('bookId', bookId);
+    window.location.href="bookdetail.html";
 }
 
 displayBooks();

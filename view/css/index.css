@@ -59,7 +59,36 @@
     margin-right: 0.5%;
 }
 
+.redirect {
+    color:black;
+}
+
 .options {
     width: 100%;
+}
+
+#main-info-book {
+    display: flex;
+    justify-content: space-evenly;
+    padding-bottom: 2%;
+}
+
+#main-info-book > div {
+    border: 3px solid #2f3535;
+    border-radius: 5px;
+    padding: 1%;
+}
+
+#update-data input {
+    width: 100%;
+}
+
+
+#body-writer-show td:first-child, #body-theme-show td:first-child{
+    width: 75%;
+}
+
+#body-instance-show td {
+    width: 25%;
 }
 
