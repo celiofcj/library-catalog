@@ -80,14 +80,17 @@ async function getInstances(id){
 
 async function updateBook(){
     let book = JSON.parse(window.localStorage.getItem('book'));
-    let tittle = document.getElementById('new-title').value;
-    let year = parseInt(document.getElementById('new-year').value);
-    let publisher = document.getElementById('new-publisher').value;
+    let title = document.getElementById(
+        'new-title').value !== '' ? document.getElementById('new-title').value : book.title;
+    let year = parseInt(document.getElementById(
+        'new-year').value !== '' ? document.getElementById('new-year').value : book.publishYear);
+    let publisher = document.getElementById(
+        'new-publisher').value !== '' ? document.getElementById('new-publisher').value : book.publisher;
     let writers = book.writers;
     let themes = book.themes;
 
     console.log(year + ' ' + publisher);
-    book.title = tittle;
+    book.title = title;
     book.publishYear = year;
     book.publisher = publisher;
     book.writers = filterIds(writers);
