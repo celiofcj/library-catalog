@@ -11,14 +11,21 @@ async function displayBook(){
     displayInstances(instances);
 }
 
+function cloneBook(){
+    let book = window.localStorage.getItem('book');
+    window.localStorage.setItem('updateBook', book);
+}
+
 function displayWriters(writers){
     let writersLine = "";
     writers.forEach(writer => {
         writersLine += `
         <tr>
-        <td>${writer.name}</td>
-        <td><button type="button" class = "btn btn-danger mx-auto d-block" onclick="removeWriter(${writer.id})">Remove</button></td>
-</tr>
+            <td>${writer.name}</td>
+            <td id="writer${writer.id}-btn">
+                <button type="button" class="btn btn-danger mx-auto d-block" onclick="removeWriter(${writer.id})">Remove</button>
+            </td>
+        </tr>
     `;
     });
 
@@ -31,7 +38,9 @@ function displayThemes(themes){
         themesLine += `
         <tr>
             <td>${theme.name}</td>
-            <td><button type="button" class = "btn btn-danger mx-auto d-block" onclick="removeTheme(${theme.id})">Remove</button></td>
+            <td id="theme${theme.id}-btn">
+                <button type="button" class = "btn btn-danger mx-auto d-block" onclick="removeTheme(${theme.id})">Remove</button>
+            </td>
         </tr>
     `;
     });
@@ -79,30 +88,29 @@ async function getInstances(id){
 }
 
 async function updateBook(){
-    let book = JSON.parse(window.localStorage.getItem('book'));
+    let updateBook = JSON.parse(window.localStorage.getItem('updateBook'));
+    console.log(JSON.parse(window.localStorage.getItem('updateBook')));
     let title = document.getElementById(
-        'new-title').value !== '' ? document.getElementById('new-title').value : book.title;
+        'new-title').value !== '' ? document.getElementById('new-title').value : updateBook.title;
     let year = parseInt(document.getElementById(
-        'new-year').value !== '' ? document.getElementById('new-year').value : book.publishYear);
+        'new-year').value !== '' ? document.getElementById('new-year').value : updateBook.publishYear);
     let publisher = document.getElementById(
-        'new-publisher').value !== '' ? document.getElementById('new-publisher').value : book.publisher;
-    let writers = book.writers;
-    let themes = book.themes;
+        'new-publisher').value !== '' ? document.getElementById('new-publisher').value : updateBook.publisher;
+    let writers = updateBook.writers;
+    let themes = updateBook.themes;
+    updateBook.title = title;
+    updateBook.publishYear = year;
+    updateBook.publisher = publisher;
+    updateBook.writers = filterIds(writers);
+    updateBook.themes = filterIds(themes);
 
-    console.log(year + ' ' + publisher);
-    book.title = title;
-    book.publishYear = year;
-    book.publisher = publisher;
-    book.writers = filterIds(writers);
-    book.themes = filterIds(themes);
-
-    await update(book.id, JSON.stringify(book));
+    await update(updateBook.id, JSON.stringify(updateBook));
     displayBook();
 }
 
-async function removeWriter(writerId){
-    let book = JSON.parse(window.localStorage.getItem('book'));
-    let writers = book.writers;
+function removeWriter(writerId){
+    let updateBook = JSON.parse(window.localStorage.getItem('updateBook'));
+    let writers = updateBook.writers;
     for(let i = 0; i < writerId; i++) {
         if (writers[i].id === writerId) {
             writers.splice(i, 1);
@@ -110,16 +118,36 @@ async function removeWriter(writerId){
         }
     }
 
+   document.getElementById(`writer${writerId}-btn`).innerHTML = `
+        <td id="writer${writerId}-btn">
+            <button type="button" class="btn btn-secondary mx-auto d-block"
+                    onclick="undoRemoveWriter(${writerId})">Undo
+            </button>
+        </td>`;
 
-    book.writers = filterIds(writers);
-    book.themes = filterIds(book.themes);
-    let bookUpdated = await update(book.id, JSON.stringify(book));
-    displayWriters(bookUpdated.writers);
+    updateBook.writers = writers;
+    window.localStorage.setItem('updateBook', JSON.stringify(updateBook));
 }
 
-async function removeTheme(themeId){
-    let book = JSON.parse(window.localStorage.getItem('book'));
-    let themes = book.themes;
+function undoRemoveWriter(writerId){
+    let updateBook = JSON.parse(window.localStorage.getItem('updateBook'));
+    updateBook.writers.push(JSON.parse(`{"id": ${writerId}}`));
+
+    document.getElementById(`writer${writerId}-btn`).innerHTML =
+        `<td id="writer${writerId}-btn">
+            <button type="button" class="btn btn-danger mx-auto d-block"
+                    onClick="removeWriter(${writerId})">Remove
+            </button>
+        </td>`
+    ;
+
+    window.localStorage.setItem('updateBook', JSON.stringify(updateBook));
+}
+
+
+function removeTheme(themeId){
+    let updateBook = JSON.parse(window.localStorage.getItem('updateBook'));
+    let themes = updateBook.themes;
     for(let i = 0; i < themeId; i++) {
         if (themes[i].id === themeId) {
             themes.splice(i, 1);
@@ -127,11 +155,30 @@ async function removeTheme(themeId){
         }
     }
 
+    document.getElementById(`theme${themeId}-btn`).innerHTML = `
+        <td id="theme${themeId}-btn">
+            <button type="button" class="btn btn-secondary mx-auto d-block"
+                    onclick="undoRemoveTheme(${themeId})">Undo
+            </button>
+        </td>`;
 
-    book.themes = filterIds(themes);
-    book.writers = filterIds(book.writers);
-    let bookUpdated = await update(book.id, JSON.stringify(book));
-    displayThemes(bookUpdated.themes);
+    updateBook.themes = themes;
+    window.localStorage.setItem('updateBook', JSON.stringify(updateBook));
+}
+
+function undoRemoveTheme(themeId){
+    let updateBook = JSON.parse(window.localStorage.getItem('updateBook'));
+    updateBook.themes.push(JSON.parse(`{"id": ${themeId}}`));
+
+    document.getElementById(`theme${themeId}-btn`).innerHTML =
+        `<td id="theme${themeId}-btn">
+            <button type="button" class="btn btn-danger mx-auto d-block"
+                    onClick="removeTheme(${themeId})">Remove
+            </button>
+        </td>`
+    ;
+
+    window.localStorage.setItem('updateBook', JSON.stringify(updateBook));
 }
 
 async function removeInstance(instanceId){
@@ -257,3 +304,4 @@ async function deleteBook(){
 
 
 displayBook();
+cloneBook();

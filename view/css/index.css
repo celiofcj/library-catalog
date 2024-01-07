@@ -92,3 +92,8 @@
     width: 25%;
 }
 
+.buttons-details {
+    display: flex;
+    justify-content: space-evenly;
+}
+
