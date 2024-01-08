@@ -132,7 +132,7 @@ function displayWritersOptions(){
                 break;
             }
         }
-        if(repeated === false){
+        if(!repeated){
             line += `<option value="${writerOption.id};${writerOption.name}">${writerOption.name}</option>`;
         }
     }
