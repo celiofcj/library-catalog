@@ -6,14 +6,14 @@ async function displayBooks() {
 
     books.forEach(book => {
         let themes = getThemeNames(book);
-        let authors = getWritersNames(book);
+        let writers = getWritersNames(book);
         line += `<tr>
                     <th>${i}</th>
                     <td><a href="#" class = "redirect" onclick="bookDetails(${book.id})">${book.title}</a></td>
                     <td>${book.publishYear}</td>
                     <td>${book.publisher}</td>
                     <td>${themes}</td>
-                    <td>${authors}</td>
+                    <td>${writers}</td>
         `;
         i++;
     });
