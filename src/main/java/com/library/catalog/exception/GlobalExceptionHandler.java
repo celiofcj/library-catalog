@@ -1,7 +1,7 @@
 package com.library.catalog.exception;
 
 import com.library.catalog.services.exceptions.InvalidArgumentException;
-import jakarta.persistence.EntityNotFoundException;
+import com.library.catalog.services.exceptions.ObjectNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.*;
@@ -26,8 +26,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(exception, body, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
     }
 
-    @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<Object> handleEntityNotFoundException(EntityNotFoundException exception, WebRequest request){
+    @ExceptionHandler(ObjectNotFoundException.class)
+    public ResponseEntity<Object> handleObjectNotFoundException(ObjectNotFoundException exception, WebRequest request){
         final String message = exception.getMessage();
         log.error(message, exception);
         ProblemDetail body = createProblemDetail(exception, HttpStatus.NOT_FOUND, message,
