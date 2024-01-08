@@ -217,6 +217,78 @@ function undoRemoveWriter(writerId){
     window.localStorage.setItem('updateBook', JSON.stringify(updateBook));
 }
 
+async function themesOptions(){
+    let themes = await getAllThemes();
+    window.localStorage.setItem('allThemes', JSON.stringify(themes));
+    displayThemesOptions();
+}
+
+function displayThemesOptions(){
+    let updateBook = JSON.parse(window.localStorage.getItem('updateBook'));
+    let allThemes = JSON.parse(window.localStorage.getItem('allThemes'));
+
+    let line = '';
+    line += `<div class="selectOptions">
+                <select id="themesOptions" class="form-select form-select-lg mb-3 options" aria-label=".form-select-lg example" onchange="addTheme()">
+                    <option selected value="0">Select Theme...</option>
+            `;
+    for(let themeOption of allThemes){
+        let repeated = false;
+        for(let themeRegistrated of updateBook.themes) {
+            if (themeOption.id === themeRegistrated.id) {
+                repeated = true;
+                break;
+            }
+        }
+        if(!repeated){
+            line += `<option value="${themeOption.id};${themeOption.name}">${themeOption.name}</option>`;
+        }
+    }
+
+    line +=
+        `    </select>
+         </div>
+        `;
+
+    document.getElementById('bd-theme-header').innerHTML = line;
+    document.getElementById('btn-addTheme').innerHTML = `
+        <button type="button"  class="btn btn-secondary mx-auto d-block" onclick="concludeAddTheme()">Conclude</button>`
+    ;
+}
+
+function addTheme(){
+    let value = document.getElementById('themesOptions').value;
+    let parts = value.split(';');
+    let id = parts[0];
+    let name = parts[1];
+
+
+    let updateBook = JSON.parse(window.localStorage.getItem('updateBook'));
+
+    updateBook.themes.push(JSON.parse(`{"id": ${id}, "name": "${name}"}`));
+
+    window.localStorage.setItem('updateBook', JSON.stringify(updateBook));
+    document.getElementById('body-theme-show').innerHTML +=
+        `
+        <tr>
+            <td>${name}</td>
+            <td id="theme${id}-btn">
+                <button type="button" class="btn btn-danger mx-auto d-block" onclick="removeTheme(${id})">Remove</button>
+            </td>
+        </tr>
+        `;
+
+    displayThemesOptions();
+}
+
+function concludeAddTheme(){
+    document.getElementById('bd-theme-header').innerHTML = 'Name';
+    document.getElementById('btn-addTheme').innerHTML =
+        `
+            <button type="button" class="btn btn-success mx-auto d-block" onClick="themesOptions()">Add</button>
+        `;
+}
+
 function removeTheme(themeId){
     let updateBook = JSON.parse(window.localStorage.getItem('updateBook'));
     let themes = updateBook.themes;
@@ -376,6 +448,14 @@ async function deleteBook(){
 
 async function getAllWriters(){
     const response = await fetch("http://localhost:8080/writer", {
+        method: "GET",
+        headers: new Headers(),
+    });
+    return await response.json();
+}
+
+async function getAllThemes(){
+    const response = await fetch("http://localhost:8080/theme", {
         method: "GET",
         headers: new Headers(),
     });
