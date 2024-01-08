@@ -49,6 +49,7 @@ function displayThemes(themes){
 }
 
 function displayInstances(instances){
+    document.getElementById('body-instance-show').innerHTML = '';
     instances.forEach(instance => {
         displayInstance(instance);
     });
