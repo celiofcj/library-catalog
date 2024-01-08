@@ -1,8 +1,8 @@
 package com.library.catalog.controllers;
 
-import com.library.catalog.dto.WriterConverter;
-import com.library.catalog.dto.WriterInDTO;
-import com.library.catalog.dto.WriterOutDTO;
+import com.library.catalog.dto.writer.WriterConverter;
+import com.library.catalog.dto.writer.WriterInDTO;
+import com.library.catalog.dto.writer.WriterOutDTO;
 import com.library.catalog.models.Writer;
 import com.library.catalog.services.WriterService;
 import jakarta.validation.Valid;

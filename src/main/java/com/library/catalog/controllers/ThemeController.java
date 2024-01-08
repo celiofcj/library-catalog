@@ -1,8 +1,8 @@
 package com.library.catalog.controllers;
 
-import com.library.catalog.dto.ThemeConverter;
-import com.library.catalog.dto.ThemeInDTO;
-import com.library.catalog.dto.ThemeOutDTO;
+import com.library.catalog.dto.theme.ThemeConverter;
+import com.library.catalog.dto.theme.ThemeInDTO;
+import com.library.catalog.dto.theme.ThemeOutDTO;
 import com.library.catalog.models.Theme;
 import com.library.catalog.services.ThemeService;
 import jakarta.validation.Valid;

@@ -1,5 +1,7 @@
-package com.library.catalog.dto;
+package com.library.catalog.dto.book;
 
+import com.library.catalog.dto.writer.WriterOutDTO;
+import com.library.catalog.dto.theme.ThemeOutDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,10 +15,11 @@ import java.util.List;
 @Getter
 @Setter
 @Component
-public class BookInDTO {
+public class BookOutDTO {
+    private Long id;
     private String title;
     private Integer publishYear;
     private String publisher;
-    private List<Long> themes;
-    private List<Long> writers;
+    private List<ThemeOutDTO> themes;
+    private List<WriterOutDTO> writers;
 }

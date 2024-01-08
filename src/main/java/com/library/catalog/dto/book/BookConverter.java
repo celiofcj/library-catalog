@@ -1,5 +1,9 @@
-package com.library.catalog.dto;
+package com.library.catalog.dto.book;
 
+import com.library.catalog.dto.writer.WriterConverter;
+import com.library.catalog.dto.writer.WriterOutDTO;
+import com.library.catalog.dto.theme.ThemeConverter;
+import com.library.catalog.dto.theme.ThemeOutDTO;
 import com.library.catalog.models.Book;
 import com.library.catalog.models.Theme;
 import com.library.catalog.models.Writer;

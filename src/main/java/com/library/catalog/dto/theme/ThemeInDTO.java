@@ -1,4 +1,4 @@
-package com.library.catalog.dto;
+package com.library.catalog.dto.theme;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

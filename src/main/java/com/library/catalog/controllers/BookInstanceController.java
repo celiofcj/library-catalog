@@ -1,9 +1,8 @@
 package com.library.catalog.controllers;
 
-import com.library.catalog.dto.BookInstanceConverter;
-import com.library.catalog.dto.BookInstanceInDTO;
-import com.library.catalog.dto.BookInstanceOutDTO;
-import com.library.catalog.models.Book;
+import com.library.catalog.dto.bookinstance.BookInstanceConverter;
+import com.library.catalog.dto.bookinstance.BookInstanceInDTO;
+import com.library.catalog.dto.bookinstance.BookInstanceOutDTO;
 import com.library.catalog.models.BookInstance;
 import com.library.catalog.services.BookInstanceService;
 import jakarta.validation.Valid;

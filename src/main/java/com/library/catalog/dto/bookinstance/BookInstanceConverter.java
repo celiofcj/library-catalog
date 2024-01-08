@@ -1,5 +1,6 @@
-package com.library.catalog.dto;
+package com.library.catalog.dto.bookinstance;
 
+import com.library.catalog.dto.book.BookConverter;
 import com.library.catalog.models.Book;
 import com.library.catalog.models.BookInstance;
 import org.springframework.beans.factory.annotation.Autowired;

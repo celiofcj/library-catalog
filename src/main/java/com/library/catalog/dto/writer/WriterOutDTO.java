@@ -1,4 +1,4 @@
-package com.library.catalog.dto;
+package com.library.catalog.dto.writer;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,11 +13,9 @@ import java.util.List;
 @Getter
 @Setter
 @Component
-public class BookOutDTO {
+public class WriterOutDTO {
     private Long id;
-    private String title;
-    private Integer publishYear;
-    private String publisher;
-    private List<ThemeOutDTO> themes;
-    private List<WriterOutDTO> writers;
+    private String name;
+    private String bio;
+    private List<Long> books;
 }

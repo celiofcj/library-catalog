@@ -1,4 +1,4 @@
-package com.library.catalog.dto;
+package com.library.catalog.dto.writer;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,8 +11,7 @@ import org.springframework.stereotype.Component;
 @Getter
 @Setter
 @Component
-public class BookInstanceOutDTO {
-    private Long id;
-    private Boolean available;
-    private Long book;
+public class WriterInDTO {
+    private String name;
+    private String bio;
 }

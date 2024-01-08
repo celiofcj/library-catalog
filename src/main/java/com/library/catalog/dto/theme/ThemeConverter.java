@@ -1,4 +1,4 @@
-package com.library.catalog.dto;
+package com.library.catalog.dto.theme;
 
 import com.library.catalog.models.Book;
 import com.library.catalog.models.Theme;

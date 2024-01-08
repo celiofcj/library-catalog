@@ -1,4 +1,4 @@
-package com.library.catalog.dto;
+package com.library.catalog.dto.writer;
 
 import com.library.catalog.models.Book;
 import com.library.catalog.models.Writer;

@@ -1,12 +1,11 @@
 package com.library.catalog.controllers;
 
-import com.library.catalog.dto.BookConverter;
-import com.library.catalog.dto.BookInDTO;
-import com.library.catalog.dto.BookOutDTO;
+import com.library.catalog.dto.book.BookConverter;
+import com.library.catalog.dto.book.BookInDTO;
+import com.library.catalog.dto.book.BookOutDTO;
 import com.library.catalog.models.Book;
 import com.library.catalog.services.BookService;
 
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
