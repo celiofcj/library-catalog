@@ -108,6 +108,78 @@ async function updateBook(){
     displayBook();
 }
 
+async function writersOptions(){
+    let writers = await getAllWriters();
+    window.localStorage.setItem('allWriters', JSON.stringify(writers));
+    displayWritersOptions();
+}
+
+function displayWritersOptions(){
+    let updateBook = JSON.parse(window.localStorage.getItem('updateBook'));
+    let allWriters = JSON.parse(window.localStorage.getItem('allWriters'));
+
+    let line = '';
+    line += `<div class="selectOptions">
+                <select id="writersOptions" class="form-select form-select-lg mb-3 options" aria-label=".form-select-lg example" onchange="addWriter()">
+                    <option selected value="0">Select Writer...</option>
+            `;
+    for(let writerOption of allWriters){
+        let repeated = false;
+        for(let writerRegistrated of updateBook.writers) {
+            if (writerOption.id === writerRegistrated.id) {
+                repeated = true;
+                break;
+            }
+        }
+        if(repeated === false){
+            line += `<option value="${writerOption.id};${writerOption.name}">${writerOption.name}</option>`;
+        }
+    }
+
+    line +=
+        `    </select>
+         </div>
+        `;
+
+    document.getElementById('bd-writer-header').innerHTML = line;
+    document.getElementById('btn-addWriter').innerHTML = `
+        <button type="button"  class="btn btn-secondary mx-auto d-block" onclick="concludeAddWriter()">Conclude</button>`
+    ;
+}
+
+function addWriter(){
+    let value = document.getElementById('writersOptions').value;
+    let parts = value.split(';');
+    let id = parts[0];
+    let name = parts[1];
+
+
+    let updateBook = JSON.parse(window.localStorage.getItem('updateBook'));
+
+    updateBook.writers.push(JSON.parse(`{"id": ${id}, "name": "${name}"}`));
+
+    window.localStorage.setItem('updateBook', JSON.stringify(updateBook));
+    document.getElementById('body-writer-show').innerHTML +=
+        `
+        <tr>
+            <td>${name}</td>
+            <td id="writer${id}-btn">
+                <button type="button" class="btn btn-danger mx-auto d-block" onclick="removeWriter(${id})">Remove</button>
+            </td>
+        </tr>
+        `;
+
+    displayWritersOptions();
+}
+
+function concludeAddWriter(){
+    document.getElementById('bd-writer-header').innerHTML = 'Name';
+    document.getElementById('btn-addWriter').innerHTML =
+        `
+            <button type="button" class="btn btn-success mx-auto d-block" onClick="writersOptions()">Add</button>
+        `;
+}
+
 function removeWriter(writerId){
     let updateBook = JSON.parse(window.localStorage.getItem('updateBook'));
     let writers = updateBook.writers;
@@ -143,7 +215,6 @@ function undoRemoveWriter(writerId){
 
     window.localStorage.setItem('updateBook', JSON.stringify(updateBook));
 }
-
 
 function removeTheme(themeId){
     let updateBook = JSON.parse(window.localStorage.getItem('updateBook'));
@@ -302,6 +373,13 @@ async function deleteBook(){
     }
 }
 
+async function getAllWriters(){
+    const response = await fetch("http://localhost:8080/writer", {
+        method: "GET",
+        headers: new Headers(),
+    });
+    return await response.json();
+}
 
 displayBook();
 cloneBook();

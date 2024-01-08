@@ -46,8 +46,12 @@
             <table class="table darkred table-bordered">
               <thead id="header-writer-show" class="thead">
               <tr>
-                <th scope="col">Name</th>
-                <th scope="col"></th>
+                <th scope="col" id="bd-writer-header">Name</th>
+                <th scope="col">
+                  <div id="btn-addWriter">
+                    <button type="button"  class="btn btn-success mx-auto d-block" onclick="writersOptions()">Add</button>
+                  </div>
+                </th>
               </tr>
               </thead>
               <tbody id="body-writer-show"></tbody>
