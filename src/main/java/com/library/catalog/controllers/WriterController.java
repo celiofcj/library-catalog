@@ -14,7 +14,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 
-@RequestMapping("/writer")
+@RequestMapping("/theme")
 @RestController
 public class WriterController {
     private WriterService writerService;

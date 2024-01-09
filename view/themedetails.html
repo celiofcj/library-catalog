@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+<nav>
+  <div class="topnav">
+    <a href="registerbook.html" class="nav-register">Register a book</a>
+    <a href="books.html">Books</a>
+    <a href="writers.html">Writers</a>
+    <a href="themes.html">Themes</a>
+  </div>
+</nav>
+<div class="center-box">
+  <div class ="content-box">
+    <div class="update">
+      <div class="main-info">
+        <div id="actual-data">
+          <h5 class="item-title">Name: </h5><p id="theme-name"></p>
+          <h5 class="item-title">Description: </h5><p id="description"></p>
+        </div>
+        <div id="update-data">
+          <form>
+            <div class="mb-3">
+              <label for="new-theme-name" class="form-label">New name:</label>
+              <input id="new-theme-name" placeholder="Name">
+            </div>
+            <div class="mb-3">
+              <label for="new-description" class="form-label">New description:</label>
+              <textarea class="form-control" id="new-description" placeholder="Description"></textarea>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div>
+        <h3>Books</h3>
+        <table class="table darkred table-bordered">
+          <thead id="header-books-show" class="thead">
+          <tr>
+            <th scope="col" id="wd-book-header">Name</th>
+          </tr>
+          </thead>
+          <tbody id="body-book-show"></tbody>
+        </table>
+      </div>
+      <div class="buttons-details">
+        <button type="button" class="btn btn-primary btn-lg" onclick="updateTheme()">Update theme</button>
+        <button type="button" class="btn btn-danger btn-lg" onclick="deleteTheme()">Delete theme</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="js/themedetails.js"></script>
+</body>
+</html>

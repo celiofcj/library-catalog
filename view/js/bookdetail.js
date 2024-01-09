@@ -37,7 +37,7 @@ function displayThemes(themes){
     themes.forEach(theme => {
         themesLine += `
         <tr>
-            <td>${theme.name}</td>
+            <td><a href="#" class="redirect" onclick="themeDetails(${theme.id})">${theme.name}</a></td>
             <td id="theme${theme.id}-btn">
                 <button type="button" class = "btn btn-danger mx-auto d-block" onclick="removeTheme(${theme.id})">Remove</button>
             </td>
@@ -465,6 +465,11 @@ async function getAllThemes(){
 function writerDetails(writerId){
     window.localStorage.setItem('writerId', writerId);
     window.location.href="writerdetails.html";
+}
+
+function themeDetails(themeId){
+    window.localStorage.setItem('themeId', themeId);
+    window.location.href="themedetails.html";
 }
 
 displayBook();

@@ -8,7 +8,7 @@ async function displayThemes() {
         let nOfBooks = getNumOfBooks(theme);
         line += `<tr>
                     <th>${i}</th>
-                    <td>${theme.name}</td>
+                    <td><a href="#" class="redirect" onclick="themeDetails(${theme.id})">${theme.name}</a></td>
                     <td>${description}</td>
                     <td>${nOfBooks}</td>
         `;
@@ -36,6 +36,11 @@ function getDescription(theme){
 
 function getNumOfBooks(theme){
     return theme.books.length;
+}
+
+function themeDetails(themeId){
+    window.localStorage.setItem('themeId', themeId);
+    window.location.href="themedetails.html";
 }
 
 
