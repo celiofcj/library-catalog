@@ -12,8 +12,8 @@ async function displayBooks() {
                     <td><a href="#" class = "redirect" onclick="bookDetails(${book.id})">${book.title}</a></td>
                     <td>${book.publishYear}</td>
                     <td>${book.publisher}</td>
-                    <td>${themes}</td>
                     <td>${writers}</td>
+                    <td>${themes}</td>
         `;
         i++;
     });
