@@ -184,7 +184,7 @@ function concludeAddWriter(){
 function removeWriter(writerId){
     let updateBook = JSON.parse(window.localStorage.getItem('updateBook'));
     let writers = updateBook.writers;
-    for(let i = 0; i < writerId; i++) {
+    for(let i = 0; i < writers.length; i++) {
         if (writers[i].id === writerId) {
             writers.splice(i, 1);
             break;
@@ -292,7 +292,7 @@ function concludeAddTheme(){
 function removeTheme(themeId){
     let updateBook = JSON.parse(window.localStorage.getItem('updateBook'));
     let themes = updateBook.themes;
-    for(let i = 0; i < themeId; i++) {
+    for(let i = 0; i < themes.length; i++) {
         if (themes[i].id === themeId) {
             themes.splice(i, 1);
             break;
