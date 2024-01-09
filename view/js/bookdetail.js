@@ -21,7 +21,7 @@ function displayWriters(writers){
     writers.forEach(writer => {
         writersLine += `
         <tr>
-            <td>${writer.name}</td>
+            <td><a href="#" class="redirect" onclick="writerDetails(${writer.id})">${writer.name}</a></td>
             <td id="writer${writer.id}-btn">
                 <button type="button" class="btn btn-danger mx-auto d-block" onclick="removeWriter(${writer.id})">Remove</button>
             </td>
@@ -460,6 +460,11 @@ async function getAllThemes(){
         headers: new Headers(),
     });
     return await response.json();
+}
+
+function writerDetails(writerId){
+    window.localStorage.setItem('writerId', writerId);
+    window.location.href="writerdetails.html";
 }
 
 displayBook();

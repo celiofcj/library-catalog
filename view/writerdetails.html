@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/index.css">
+</head>
+  <body>
+    <nav>
+      <div class="topnav">
+        <a href="registerbook.html" class="nav-register">Register a book</a>
+        <a href="books.html">Books</a>
+        <a href="writers.html">Writers</a>
+        <a href="themes.html">Themes</a>
+      </div>
+    </nav>
+    <div class="center-box">
+      <div class ="content-box">
+        <div class="update">
+          <div class="main-info">
+            <div id="actual-data">
+              <h5 class="item-title">Name: </h5><p id="writer-name"></p>
+              <h5 class="item-title">Biography</h5><p id="bio"></p>
+            </div>
+            <div id="update-data">
+              <form>
+                <div class="mb-3">
+                  <label for="new-writer-name" class="form-label">New name:</label>
+                  <input id="new-writer-name" placeholder="Name">
+                </div>
+                <div class="mb-3">
+                  <label for="new-bio" class="form-label">New bio:</label>
+                  <textarea class="form-control" id="new-bio" placeholder="Biography"></textarea>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div>
+            <h3>Books</h3>
+            <table class="table darkred table-bordered">
+              <thead id="header-books-show" class="thead">
+              <tr>
+                <th scope="col" id="wd-book-header">Name</th>
+              </tr>
+              </thead>
+              <tbody id="body-book-show"></tbody>
+            </table>
+          </div>
+          <div class="buttons-details">
+            <button type="button" class="btn btn-primary btn-lg" onclick="updateWriter()">Update writer</button>
+            <button type="button" class="btn btn-danger btn-lg" onclick="deleteWriter()">Delete writer</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="js/writerdetails.js"></script>
+  </body>
+</html>

@@ -67,16 +67,17 @@
     width: 100%;
 }
 
-#main-info-book {
+.main-info {
     display: flex;
     justify-content: space-evenly;
     padding-bottom: 2%;
 }
 
-#main-info-book > div {
+.main-info > div {
     border: 3px solid #2f3535;
     border-radius: 5px;
     padding: 1%;
+    width:40%;
 }
 
 #update-data input {

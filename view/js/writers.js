@@ -8,7 +8,7 @@ async function displayWriters() {
         let nOfBooks = getNumOfBooks(writer);
         line += `<tr>
                     <th>${i}</th>
-                    <td>${writer.name}</td>
+                    <td><a href="#" class = "redirect" onclick="writerDetails(${writer.id})">${writer.name}</a></td>
                     <td>${bio}</td>
                     <td>${nOfBooks}</td>
         `;
@@ -36,6 +36,11 @@ function getBio(writer){
 
 function getNumOfBooks(writer){
     return writer.books.length;
+}
+
+function writerDetails(writerId){
+    window.localStorage.setItem('writerId', writerId);
+    window.location.href="writerdetails.html";
 }
 
 
