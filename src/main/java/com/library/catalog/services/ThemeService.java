@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -59,6 +61,13 @@ public class ThemeService {
 
     @Transactional
     public void delete(Long id){
-        themeRepository.deleteById(id);
+        Optional<Theme> optional = themeRepository.findById(id);
+        if(optional.isPresent()){
+            Theme theme = optional.get();
+            theme.getBooks().forEach(book ->
+                    book.getThemes().removeIf(t -> Objects.equals(t.getId(), id)));
+
+            themeRepository.delete(theme);
+        }
     }
 }

@@ -7,8 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class WriterService {
@@ -59,6 +62,13 @@ public class WriterService {
 
     @Transactional
     public void delete(Long id){
-        writerRepository.deleteById(id);
+        Optional<Writer> optional = writerRepository.findById(id);
+        if(optional.isPresent()){
+            Writer writer = optional.get();
+            writer.getBooks().forEach(book ->
+                book.getWriters().removeIf(w -> Objects.equals(w.getId(), id)));
+
+            writerRepository.delete(writer);
+        }
     }
 }

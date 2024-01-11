@@ -39,10 +39,17 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleDataIntegrityViolationException(DataIntegrityViolationException exception,
                                                                         WebRequest request){
         final String message = exception.getMostSpecificCause().getMessage();
+        HttpStatus status;
+        if(message.contains("Duplicate entry")){
+            status = HttpStatus.CONFLICT;
+        }
+        else {
+            status = HttpStatus.BAD_REQUEST;
+        }
         log.error(message, exception);
-        ProblemDetail body = createProblemDetail(exception, HttpStatus.BAD_REQUEST, message,
+        ProblemDetail body = createProblemDetail(exception, status, message,
                 null, null, request);
-        return handleExceptionInternal(exception, body, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+        return handleExceptionInternal(exception, body, new HttpHeaders(), status, request);
     }
 
     @ExceptionHandler(InvalidArgumentException.class)

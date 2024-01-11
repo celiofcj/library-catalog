@@ -34,14 +34,14 @@ public class Book {
     @Column(name = "publisher")
     private String publisher;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST})
+    @ManyToMany
     @JoinTable(name = "theme_book",
             joinColumns = @JoinColumn(referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(referencedColumnName = "id"))
     private List<Theme> themes;
 
 
-    @ManyToMany(cascade = {CascadeType.PERSIST})
+    @ManyToMany
     @JoinTable(name = "writer_book",
             joinColumns = @JoinColumn(referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(referencedColumnName = "id"))
